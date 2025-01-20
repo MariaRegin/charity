@@ -1,0 +1,20 @@
+.container {
+  width: 320px;
+  border: 1px solid #0000001f;
+  padding: 15px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.button {
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000de;
+  width: 100%;
+  border: 1px solid #000000de;
+  border-radius: 4px;
+  margin-top: 30px;
+}

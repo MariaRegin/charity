@@ -7,7 +7,7 @@
     "test": "test",
     "start": "node build/index.js",
     "dev": "nodemon --exec ts-node index.ts",
-    "build": "tsc && cp .env ./build/.env"
+    "build": "tsc && copyfiles .env ./build/.env"
   },
   "keywords": [
     "charity"
@@ -38,6 +38,7 @@
     "@types/node": "^20.9.4",
     "@types/swagger-ui-express": "^4.1.6",
     "@types/uuid": "^9.0.8",
-    "@types/yamljs": "^0.2.34"
+    "@types/yamljs": "^0.2.34",
+    "copyfiles": "^2.4.1"
   }
 }

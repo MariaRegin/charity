@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.list {
+  display: block;
+}

@@ -1,0 +1,15 @@
+.container {
+  width: 300px;
+  border: #00000033;
+}
+
+.image {
+  width: 220px;
+  height: 220px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 400;
+  color: #000000de;
+}

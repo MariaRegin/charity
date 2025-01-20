@@ -1,0 +1,16 @@
+.container {
+  border: 1px solid #0000001f;
+  padding: 15px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.input {
+  background: url("./search.png") no-repeat center left;
+  border: none;
+  border-bottom: 1px solid #0000006b;
+  padding-left: 25px;
+}
