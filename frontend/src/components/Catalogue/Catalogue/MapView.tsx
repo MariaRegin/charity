@@ -6,13 +6,15 @@ const MapView = ({ requests }) => {
       <Map
         defaultState={{ center: [55.75, 37.57], zoom: 5 }}
         style={{ width: "500px", height: "400px" }}
+        modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
       >
         {requests.map((request) => (
           <Placemark
             key={request.id}
             geometry={[request.location.latitude, request.location.longitude]}
             properties={{
-              balloonContent: request.title,
+              balloonContent: `${request.title}, ${request.location.city}, ${request.location.district}, ${request.contacts.phone}`,
+              hintContent: `${request.title}, ${request.location.city}`,
             }}
           />
         ))}

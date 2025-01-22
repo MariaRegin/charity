@@ -48,12 +48,6 @@ const List = () => {
   };
 
   return (
-    // <div className={styles.container}>
-    //   {requests.map((request) => (
-    //     <ListItem request={request} />
-    //   ))}
-    // </div>
-
     <div>
       <div>
         <button onClick={() => setViewMode("grid")}>Сетка</button>

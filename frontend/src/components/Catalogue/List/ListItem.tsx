@@ -20,22 +20,24 @@ const ListItem = ({ request }) => {
 
   return (
     <div className={styles.container}>
-      <img src={imageSrc} alt="patient" className={styles.image} />
-      <h3 className={styles.title}>{request.title}</h3>
-      <p>
-        {listConstants.organization} {request.organization.title}
-      </p>
-      <p>{listConstants.location}</p>
-      <p>
-        {listConstants.goal} {request.goalDescription}
-      </p>
-      <p>
-        {listConstants.deadline} {request.endingDate}
-      </p>
-      <p>{listConstants.collected}</p>
-      <p></p>
-
-      <button></button>
+      <div>
+        <img src={imageSrc} alt="patient" className={styles.image} />
+        <h3 className={styles.title}>{request.title}</h3>
+        <p>
+          {listConstants.organization} {request.organization.title}
+        </p>
+        <p>{listConstants.location}</p>
+        <p>
+          {listConstants.goal} {request.goalDescription}
+        </p>
+        <p>
+          {listConstants.deadline} {request.endingDate}
+        </p>
+        <p>{listConstants.collected}</p>
+      </div>
+      <div className={styles.buttonContainer}>
+        <button className={styles.button}>ПОМОЧЬ</button>
+      </div>
     </div>
   );
 };
