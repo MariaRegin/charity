@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import styles from "./list.module.css";
 import ListItem from "./ListItem";
 import MapView from "../Catalogue/MapView";
+import filterRules from "../Filter/filterRules";
 
-const List = () => {
+const List = ({ selectedFilters }) => {
   const [requests, setRequests] = useState([]);
   const [viewMode, setViewMode] = useState("grid");
 
@@ -25,21 +26,30 @@ const List = () => {
     fetchRequests();
   }, []);
 
+  const filteredRequests = requests.filter((request) => {
+    for (const filterName in selectedFilters) {
+      if (selectedFilters[filterName] && !filterRules[filterName](request)) {
+        return false;
+      }
+    }
+    return true;
+  });
+  console.log(selectedFilters);
   const renderRequests = () => {
     if (viewMode === "list") {
       return (
         <div className={styles.list}>
-          {requests.map((request) => (
+          {filteredRequests.map((request) => (
             <ListItem key={request.id} request={request} />
           ))}
         </div>
       );
     } else if (viewMode === "map") {
-      return <MapView requests={requests} />;
+      return <MapView requests={filteredRequests} />;
     } else {
       return (
         <div className={styles.grid}>
-          {requests.map((request) => (
+          {filteredRequests.map((request) => (
             <ListItem key={request.id} request={request} />
           ))}
         </div>

@@ -2,7 +2,7 @@ import styles from "./filterComponent.module.css";
 import { useState } from "react";
 import FilterBlock from "./FilterBlock";
 
-const FilterComponent = ({ filterData }) => {
+const FilterComponent = ({ filterData, onFiltersChange }) => {
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const handleFilterChange = (name, isChecked) => {
@@ -10,10 +10,12 @@ const FilterComponent = ({ filterData }) => {
       ...prev,
       [name]: isChecked,
     }));
+    onFiltersChange({ ...selectedFilters, [name]: isChecked });
   };
 
   const handleReset = () => {
     setSelectedFilters({});
+    onFiltersChange({});
   };
 
   return (
