@@ -7,12 +7,15 @@ import List from "../List/List";
 
 const Catalogue = () => {
   const [selectedFilters, setSelectedFilters] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleFiltersChange = (filters) => {
     setSelectedFilters(filters);
   };
 
-  const handleSearch = () => {};
+  const handleSearchChange = (term) => {
+    setSearchTerm(term);
+  };
 
   return (
     <div className={styles.container}>
@@ -21,8 +24,8 @@ const Catalogue = () => {
         onFiltersChange={handleFiltersChange}
       />
       <div>
-        <Search onSearch={handleSearch} />
-        <List selectedFilters={selectedFilters} />
+        <Search onSearchChange={handleSearchChange} />
+        <List selectedFilters={selectedFilters} searchTerm={searchTerm} />
       </div>
     </div>
   );

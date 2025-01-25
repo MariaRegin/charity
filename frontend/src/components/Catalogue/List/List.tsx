@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styles from "./list.module.css";
 import ListItem from "./ListItem";
 import MapView from "../Catalogue/MapView";
 import filterRules from "../Filter/filterRules";
 
-const List = ({ selectedFilters }) => {
+const List = ({ selectedFilters, searchTerm }) => {
   const [requests, setRequests] = useState([]);
   const [viewMode, setViewMode] = useState("grid");
 
@@ -26,15 +26,31 @@ const List = ({ selectedFilters }) => {
     fetchRequests();
   }, []);
 
-  const filteredRequests = requests.filter((request) => {
-    for (const filterName in selectedFilters) {
-      if (selectedFilters[filterName] && !filterRules[filterName](request)) {
-        return false;
+  const filteredRequests = useMemo(() => {
+    return requests.filter((request) => {
+      for (const filterName in selectedFilters) {
+        if (selectedFilters[filterName] && !filterRules[filterName](request)) {
+          return false;
+        }
       }
-    }
-    return true;
-  });
-  console.log(selectedFilters);
+      if (searchTerm) {
+        const searchFields = [
+          request.title,
+          request.organization.title,
+          request.goalDescription,
+        ];
+        if (
+          !searchFields.some((field) =>
+            field.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        ) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [requests, selectedFilters, searchTerm]);
+
   const renderRequests = () => {
     if (viewMode === "list") {
       return (

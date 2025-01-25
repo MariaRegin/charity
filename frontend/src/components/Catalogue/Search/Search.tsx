@@ -1,24 +1,13 @@
 import { useState } from "react";
 import styles from "./search.module.css";
 
-const Search = ({
-  placeholder = "Введите название задачи или организации",
-  onSearch,
-}) => {
+const Search = ({ onSearchChange }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSearchClick = () => {
-    onSearch(searchTerm);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleSearchClick();
-    }
+    const term = event.target.value;
+    setSearchTerm(term);
+    onSearchChange(term);
   };
 
   return (
@@ -27,12 +16,10 @@ const Search = ({
       <input
         className={styles.input}
         type="text"
+        placeholder="Введите название задачи или организации"
         value={searchTerm}
         onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        placeholder={placeholder}
       />
-      <button type="button" onClick={handleSearchClick}></button>
     </div>
   );
 };

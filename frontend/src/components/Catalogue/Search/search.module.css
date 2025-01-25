@@ -10,6 +10,7 @@
 
 .input {
   background: url("./search.png") no-repeat center left;
+  width: 90%;
   border: none;
   border-bottom: 1px solid #0000006b;
   padding-left: 25px;
