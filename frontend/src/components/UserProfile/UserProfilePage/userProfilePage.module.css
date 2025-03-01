@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+}
+
+.tabBtn {
+  padding: 10px 15px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  border: none;
+}
+
+/* .active {
+  background-color: #ddd;
+} */

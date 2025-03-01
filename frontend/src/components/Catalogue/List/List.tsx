@@ -1,27 +1,44 @@
-import { useState, useEffect, useMemo } from "react";
 import styles from "./list.module.css";
+import { useState, useEffect, useMemo } from "react";
 import ListItem from "./ListItem";
 import MapView from "../Catalogue/MapView";
 import filterRules from "../Filter/filterRules";
+import notFound from "./not-found.png";
+import errorFetching from "./error.png";
+import ListView from "../Catalogue/ListView";
 
 const List = ({ selectedFilters, searchTerm }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filteredRequestsList, setFilteredRequestsList] = useState([]);
   const [requests, setRequests] = useState([]);
   const [viewMode, setViewMode] = useState("grid");
 
   useEffect(() => {
     const fetchRequests = async () => {
       const token = localStorage.getItem("token");
-
-      const response = await fetch(
-        "https://natticharity.eveloth.ru/api/request",
-        {
+      try {
+        const response = await fetch("/api/request", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        });
+        if (!response.ok) {
+          console.error(
+            "Ошибка при получении данных",
+            response.status,
+            response.statusText
+          );
+          setError(new Error(`HTTP error! status: ${response.status}`));
+          return;
         }
-      );
-      const data = await response.json();
-      setRequests(data);
+        const data = await response.json();
+        setRequests(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Произошла ошибка:", error);
+        setError(error as Error);
+      }
     };
     fetchRequests();
   }, []);
@@ -51,21 +68,19 @@ const List = ({ selectedFilters, searchTerm }) => {
     });
   }, [requests, selectedFilters, searchTerm]);
 
+  useEffect(() => {
+    setFilteredRequestsList(filteredRequests);
+  }, [filteredRequests]);
+
   const renderRequests = () => {
     if (viewMode === "list") {
-      return (
-        <div className={styles.list}>
-          {filteredRequests.map((request) => (
-            <ListItem key={request.id} request={request} />
-          ))}
-        </div>
-      );
+      return <ListView requests={filteredRequestsList} />;
     } else if (viewMode === "map") {
-      return <MapView requests={filteredRequests} />;
+      return <MapView requests={filteredRequestsList} />;
     } else {
       return (
         <div className={styles.grid}>
-          {filteredRequests.map((request) => (
+          {filteredRequestsList.map((request) => (
             <ListItem key={request.id} request={request} />
           ))}
         </div>
@@ -73,15 +88,31 @@ const List = ({ selectedFilters, searchTerm }) => {
     }
   };
 
+  if (isLoading) return <div>Загрузка...</div>;
+  if (error)
+    return (
+      <div>
+        <img src={errorFetching} alt="error" />
+        <p>Ошибка! Не удалось загрузить информацию</p>
+      </div>
+    );
+
   return (
-    <div>
+    <>
       <div>
         <button onClick={() => setViewMode("grid")}>Сетка</button>
         <button onClick={() => setViewMode("list")}>Список</button>
         <button onClick={() => setViewMode("map")}>Карта</button>
       </div>
-      <div className={styles.container}>{renderRequests()}</div>
-    </div>
+      {filteredRequestsList.length === 0 ? (
+        <div>
+          <img src={notFound} alt="no results" />
+          <p>Запросы не найдены</p>
+        </div>
+      ) : (
+        <div className={styles.container}>{renderRequests()}</div>
+      )}
+    </>
   );
 };
 

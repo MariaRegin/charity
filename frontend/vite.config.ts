@@ -3,4 +3,13 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://natticharity.eveloth.ru",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });

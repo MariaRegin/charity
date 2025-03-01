@@ -1,88 +1,89 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import styles from "./login.module.css";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  const { isAuthorized, setIsAuthorized } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
 
-  const validate = () => {
-    let emailError = "";
-    let passwordError = "";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({ mode: "onChange" });
 
-    if (!email.includes("@")) {
-      emailError = "Некорректный e-mail";
-    }
-
-    if (password.length < 6) {
-      passwordError = "Пароль должен содержать минимум 6 символов";
-    }
-
-    if (emailError || passwordError) {
-      setErrors({ email: emailError, password: passwordError });
-      return false;
-    }
-    return true;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validate()) {
-      try {
-        const response = await fetch(
-          "https://natticharity.eveloth.ru/api/auth/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ login: email, password: password }),
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Неверные учетные данные");
-        }
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
-        navigate("/requests");
-      } catch (error) {
-        setErrors({ ...errors, password: error.message });
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("/api/auth/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ login: data.email, password: data.password }),
+      });
+      if (!response.ok) {
+        throw new Error("Неверные учетные данные");
       }
+      const result = await response.json();
+      localStorage.setItem("token", result.token);
+      setIsAuthorized(true);
+      navigate("/requests");
+    } catch (error) {
+      console.error("Произошла ошибка: ", error);
     }
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Авторизация</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h4 className={styles.titleForm}>Вход</h4>
         <div>
           <input
-            className={styles.input}
+            className={`${styles.input} ${
+              errors.email ? styles.error : styles.valid
+            }`}
             type="email"
             placeholder="Введите e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email", {
+              required: "E-mail обязателен",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Введите e-mail в корректном формате",
+              },
+            })}
           />
-          {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
+          {errors.email && <span>{errors.email.message}</span>}
         </div>
-        <div>
+        <div className={styles.inputContainer}>
           <input
-            className={styles.input}
+            className={`${styles.input} ${
+              errors.password ? styles.error : styles.valid
+            }`}
             type={showPassword ? "*********" : "password"}
             placeholder="Введите пароль"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("password", {
+              required: "Пароль обязателен",
+              minLength: {
+                value: 8,
+                message: "Длина пароля 8 или более символов",
+              },
+            })}
           />
-          <button onClick={() => setShowPassword(!showPassword)}>Глаз</button>
-          {showPassword ? "Скрыть" : "Показать"}
-          {errors.password && (
-            <span style={{ color: "red" }}>{errors.password}</span>
-          )}
+          <button
+            className={styles.buttonShowPassword}
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+          ></button>
+          {errors.password && <span>{errors.password.message}</span>}
         </div>
         <button className={styles.button} type="submit">
           ВОЙТИ
