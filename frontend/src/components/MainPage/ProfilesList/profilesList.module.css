@@ -1,0 +1,51 @@
+.container {
+  box-shadow: 0 0 0 1px #e0e0e0;
+  padding-left: 40px;
+  max-width: 750px;
+  max-height: 844px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 124%;
+  letter-spacing: 0.01em;
+  color: rgba(0, 0, 0, 0.87);
+  padding-top: 64px;
+  padding-bottom: 90px;
+}
+
+.profilesList {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 348px;
+}
+
+.testUser {
+  flex-shrink: 1;
+  border: 1px solid #0288d1;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  width: 320px;
+  max-height: 90px;
+}
+
+.testUserName {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.01em;
+  color: #014361;
+}
+
+.testUserDetais {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: 0.01em;
+  color: #014361;
+}

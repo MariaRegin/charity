@@ -1,8 +1,17 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
 
-const AuthContext = createContext();
+type AuthContextType = {
+  isAuthorized: boolean;
+  setIsAuthorized: (value: boolean) => void;
+};
 
-const AuthProvider = ({ children }) => {
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   return (

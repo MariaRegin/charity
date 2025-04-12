@@ -1,7 +1,21 @@
 import styles from "./listView.module.css";
 import { listConstants } from "../List/listConstants";
 
-const ListView = ({ requests }) => {
+interface Organization {
+  title: string;
+}
+interface Request {
+  title: string;
+  organization: Organization;
+  endingDate: string;
+  goalDescription: string;
+}
+
+interface ListViewProps {
+  requests: Request[];
+}
+
+const ListView: React.FC<ListViewProps> = ({ requests }) => {
   return (
     <div className={styles.container}>
       {requests.map((request) => (

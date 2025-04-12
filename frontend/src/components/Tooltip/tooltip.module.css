@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  background: #55b938;
+  border-radius: 4px;
+  padding: 12px;
+  margin-left: calc(105%);
+  margin-top: calc(2%);
+  pointer-events: none;
+  width: 200px;
+  height: 64px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+}

@@ -1,6 +1,28 @@
 import { YMaps, Map, Placemark, ZoomControl } from "@pbe/react-yandex-maps";
 
-const MapView = ({ requests }) => {
+interface Location {
+  latitude: number;
+  longitude: number;
+  city: string;
+  district: string;
+}
+
+interface Contacts {
+  phone: string;
+}
+
+interface Request {
+  title: string;
+  id: string;
+  location: Location;
+  contacts: Contacts;
+}
+
+interface MapViewProps {
+  requests: Request[];
+}
+
+const MapView: React.FC<MapViewProps> = ({ requests }) => {
   return (
     <YMaps>
       <Map

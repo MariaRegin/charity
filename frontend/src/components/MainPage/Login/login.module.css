@@ -1,15 +1,28 @@
 .container {
-  border: 1px solid #e0e0e0;
+  box-shadow: 0 0 0 1px #e0e0e0;
+  padding-left: 40px;
+  max-width: 750px;
+  max-height: 844px;
 }
 
 .title {
-  font-size: 34px;
+  font-family: var(--font-family);
   font-weight: 400;
+  font-size: 34px;
+  line-height: 124%;
+  letter-spacing: 0.01em;
+  color: rgba(0, 0, 0, 0.87);
+  padding-top: 64px;
+  padding-bottom: 90px;
 }
 
 .titleForm {
-  font-size: 24px;
+  font-family: var(--font-family);
   font-weight: 400;
+  font-size: 24px;
+  line-height: 133%;
+  color: rgba(0, 0, 0, 0.87);
+  padding-bottom: 35px;
 }
 
 input:-webkit-autofill {
@@ -21,22 +34,20 @@ input:-webkit-autofill {
 }
 
 .input {
-  border: 1px solid #b2a2a23b;
+  border: 1px solid rgba(0, 0, 0, 0.23);
   border-radius: 4px;
-  margin-bottom: 10px;
-  width: 50%;
+  padding: 0px 12px;
+  margin-bottom: 30px;
+  width: 485px;
   height: 56px;
-  padding-right: 40px;
 }
 
 .valid {
-  border: 3px solid rgb(81, 200, 81);
   background-color: rgb(239, 244, 239);
   transition: 0.5s;
 }
 
 .error {
-  border: 3px solid rgb(206, 99, 99);
   background-color: rgb(238, 178, 178);
   transition: 0.5s;
 }
@@ -53,11 +64,18 @@ input:-webkit-autofill {
 }
 
 .button {
-  font-size: 15px;
-  font-weight: 500;
-  color: #ffffff;
-  background-color: #1e88e5;
+  border-radius: 4px;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  background: #1e88e5;
+  padding: 8px 22px;
   width: 485px;
   height: 42px;
-  border-radius: 4px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 173%;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #fff;
 }

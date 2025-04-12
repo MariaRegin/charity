@@ -5,15 +5,19 @@ import FilterComponent from "../Filter/FilterComponent";
 import Search from "../Search/Search";
 import List from "../List/List";
 
-const Catalogue = () => {
-  const [selectedFilters, setSelectedFilters] = useState({});
-  const [searchTerm, setSearchTerm] = useState("");
+interface Filter {
+  [key: string]: string | string[];
+}
 
-  const handleFiltersChange = (filters) => {
+const Catalogue: React.FC = () => {
+  const [selectedFilters, setSelectedFilters] = useState<Filter>({});
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const handleFiltersChange = (filters: Filter) => {
     setSelectedFilters(filters);
   };
 
-  const handleSearchChange = (term) => {
+  const handleSearchChange = (term: string) => {
     setSearchTerm(term);
   };
 

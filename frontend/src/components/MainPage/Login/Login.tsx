@@ -43,9 +43,9 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Авторизация</h2>
+      <h4 className={styles.title}>Авторизация</h4>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h4 className={styles.titleForm}>Вход</h4>
+        <h5 className={styles.titleForm}>Вход</h5>
         <div>
           <input
             className={`${styles.input} ${
